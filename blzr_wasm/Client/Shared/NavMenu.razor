@@ -1,0 +1,15 @@
+﻿<MudNavMenu>
+    <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavLink Href="/" Match="NavLinkMatch.Prefix">Options</MudNavLink>
+    <MudNavGroup Title="Collections" Expanded="true">
+        <MudNavGroup Title="mongoDb" Expanded="true">
+            <MudNavLink Href="/api/users"  Match="NavLinkMatch.Prefix">Users</MudNavLink>
+            <MudNavLink Href="/api/products"  Match="NavLinkMatch.Prefix">Products</MudNavLink>
+        </MudNavGroup>
+        <MudNavGroup Title="sqlserver" Expanded="true">
+            <MudNavLink Href="/api/departments"  Match="NavLinkMatch.Prefix">Departments</MudNavLink>
+            <MudNavLink Href="/api/employees"  Match="NavLinkMatch.Prefix">Employees</MudNavLink>
+        </MudNavGroup>
+    </MudNavGroup>
+    <MudNavLink Href="/about"  Match="NavLinkMatch.Prefix">About</MudNavLink>
+</MudNavMenu>
