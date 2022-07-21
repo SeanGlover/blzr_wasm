@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "ignored": "true",
+      "type": "secrets",
+      "connectionId": "VaultUri"
+    },
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "cnxnString"
+    },
+    "cosmosdb1": {
+      "type": "cosmosdb",
+      "connectionId": "mongoDbString"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:localDb_employees",
+      "dynamicId": null
+    },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:azureDb_employees",
+      "dynamicId": null
+    }
+  }
+}

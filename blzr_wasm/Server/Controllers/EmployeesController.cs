@@ -21,18 +21,15 @@ namespace blzr_wasm.Server.Controllers
             try
             {
                 var result = await employeeRepository.Search(name, gender);
-
                 if (result.Any())
                 {
                     return Ok(result);
                 }
-
                 return NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database- {ex.Message}");
             }
         }
 
@@ -43,10 +40,9 @@ namespace blzr_wasm.Server.Controllers
             {
                 return Ok(await employeeRepository.GetEmployees());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database- {ex.Message}");
             }
         }
 
@@ -56,18 +52,12 @@ namespace blzr_wasm.Server.Controllers
             try
             {
                 var result = await employeeRepository.GetEmployee(id);
-
-                if (result == null)
-                {
-                    return NotFound();
-                }
-
+                if (result == null) { return NotFound(); }
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database- {ex.Message}");
             }
         }
 
@@ -88,14 +78,11 @@ namespace blzr_wasm.Server.Controllers
                 }
 
                 var createdEmployee = await employeeRepository.AddEmployee(employee);
-
-                return CreatedAtAction(nameof(GetEmployee),
-                    new { id = createdEmployee.EmployeeId }, createdEmployee);
+                return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.EmployeeId }, createdEmployee);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error creating new employee record");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error creating new employee record- {ex.Message}");
             }
         }
 
@@ -108,19 +95,15 @@ namespace blzr_wasm.Server.Controllers
                     return BadRequest("Employee ID mismatch");
 
                 var employeeToUpdate = await employeeRepository.GetEmployee(id);
-
                 if (employeeToUpdate == null)
                 {
                     return NotFound($"Employee with Id = {id} not found");
                 }
-
                 return await employeeRepository.UpdateEmployee(employee);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error updating employee record");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error updating employee record- {ex.Message}");
             }
         }
 
@@ -130,21 +113,17 @@ namespace blzr_wasm.Server.Controllers
             try
             {
                 var employeeToDelete = await employeeRepository.GetEmployee(id);
-
                 if (employeeToDelete == null)
                 {
                     return NotFound($"Employee with Id = {id} not found");
                 }
 
                 await employeeRepository.DeleteEmployee(id);
-
                 return Ok($"Employee with Id = {id} deleted");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error deleting employee record");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error deleting employee record- {ex.Message}");
             }
         }
     }

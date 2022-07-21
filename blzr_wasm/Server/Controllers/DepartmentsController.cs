@@ -22,10 +22,9 @@ namespace blzr_wasm.Server.Controllers
             {
                 return Ok(await departmentRepository.GetDepartments());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database- {ex.Message}");
             }
         }
 
@@ -40,13 +39,11 @@ namespace blzr_wasm.Server.Controllers
                 {
                     return NotFound();
                 }
-
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database- {ex.Message}");
             }
         }
     }

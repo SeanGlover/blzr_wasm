@@ -23,7 +23,7 @@ builder.Services.AddSingleton<IMongoClient>(s => new MongoClient(builder.Configu
 builder.Services.AddScoped<IProductService, ProductService>();
 
 // sqlserver requirements
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection_employees")));
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("azureDb_employees")));
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 

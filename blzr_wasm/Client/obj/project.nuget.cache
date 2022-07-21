@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nc4PdUtT9EyZECOywwdILo66mOdQzmiBEgndtT84D3KY4szOVNgLgK1HsbWJ4btoGn0puuMBTNoDsuiM9ScbHg==",
+  "dgSpecHash": "Qq6EyTPiCGX/9zlkT5W9uUlJMdfo1/O3jOS0IZCiE27ts+X6YCmzPsPRu9bvIIdWUOOeSXSUUmg5ApfMLeFtuw==",
   "success": true,
   "projectFilePath": "C:\\Users\\SeanGlover\\source\\repos\\blzr_wasm\\blzr_wasm\\Client\\blzr_wasm.Client.csproj",
   "expectedPackageFiles": [
@@ -46,7 +46,7 @@
     "C:\\Users\\SeanGlover\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
     "C:\\Users\\SeanGlover\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\SeanGlover\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
-    "C:\\Users\\SeanGlover\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.5\\microsoft.netcore.app.runtime.mono.browser-wasm.6.0.5.nupkg.sha512"
+    "C:\\Users\\SeanGlover\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.7\\microsoft.netcore.app.runtime.mono.browser-wasm.6.0.7.nupkg.sha512"
   ],
   "logs": []
 }

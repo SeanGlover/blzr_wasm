@@ -21,6 +21,7 @@ namespace blzr_wasm.Shared
         public Gender Gender { get; set; }
         public int DepartmentId { get; set; }
         public string PhotoPath { get; set; } = string.Empty;
+        public string AccessKey { get; set; } = string.Empty;
         public Department? Department { get; set; }
     }
 }

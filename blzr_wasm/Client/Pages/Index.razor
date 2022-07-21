@@ -1,10 +1,11 @@
 ﻿@page "/"
 @using Newtonsoft.Json
+@using System.Text.RegularExpressions
 @using blzr_wasm.Shared
 @inject HttpClient Http
 @inject IJSRuntime jsRuntime
 
-<PageTitle>Sign in</PageTitle>
+<PageTitle>Mky lv</PageTitle>
 
 <section class="gradient-form h-100" style="background-color: #eee;">
 
@@ -40,7 +41,7 @@
                   <div class="text-center pt-1 mb-2 pb-1">
                     <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" id="submitCreds" @onclick="OnSubmit" style="align-items:center; display:flex; margin-right:3px; justify-content:center; height:40px; background-color: rgb(128,128,225)">
                         <span class="" id="submitImage" style="margin-right: 10px; height:24px; width:24px;"></span>
-                        Log in
+                        Mky lv
                     </button>
                   </div>
 
@@ -65,6 +66,8 @@
     private string changeData = string.Empty;
     private string? usrValue = string.Empty;
     private string? pwdValue = string.Empty;
+    private List<Employee> employees = new();
+    private List<User> users = new();
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -73,6 +76,20 @@
             await jsRuntime.InvokeVoidAsync("addListener");
             await base.OnAfterRenderAsync(firstRender);
         }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        bool condensed = false;
+
+        //var emps = await Http.GetFromJsonAsync<Employee[]>("api/Employees");
+        employees = await Http.GetFromJsonAsync<List<Employee>>("api/Employees") ?? new();
+        string empNames = string.Join(Environment.NewLine, employees.Select(e => e.FirstName));
+        Console.WriteLine(condensed ? empNames : JsonConvert.SerializeObject(employees, Formatting.Indented));
+
+        //users = await Http.GetFromJsonAsync<List<User>>("api/Users") ?? new();
+        //string usrNames = string.Join(Environment.NewLine, users.Select(e => e.Name));
+        //Console.WriteLine(condensed ? usrNames : JsonConvert.SerializeObject(users, Formatting.Indented));
+        //Stop();
     }
 
     // https://stackoverflow.com/questions/58125929/blazor-how-to-use-the-onchange-event-in-select-when-using-bind-also
@@ -85,29 +102,46 @@
         // password ok -> next screen
 
         changeData = "clicked";
-        string usr = (usrValue ?? string.Empty).ToLowerInvariant();
-        string pwd = (pwdValue ?? string.Empty).ToLowerInvariant();
+        string usr = (usrValue ?? string.Empty).ToLowerInvariant().Trim();
+        usr = Regex.Replace(usr, " +", " "); // extra spaces between first, middle and last names are removed
+        string pwd = (pwdValue ?? string.Empty).ToLowerInvariant().Trim();
         if (usr.Any() & pwd.Any())
         {
             changeData = $"{usr} requested access";
-            List<User>? users = await Http.GetFromJsonAsync<List<User>>("/api/users");
-            Console.WriteLine(JsonConvert.SerializeObject(users, Formatting.Indented));
+            //List<User>? users = await Http.GetFromJsonAsync<List<User>>("/api/users");
+            //Console.WriteLine(JsonConvert.SerializeObject(users, Formatting.Indented));
+            employees = await Http.GetFromJsonAsync<List<Employee>>("api/Employees") ?? new();
             changeData = "received user list";
 
             // 'bi bi-check', 'bi bi-question', 'bi bi-x', 'bi bi-globe'
-            if (users == null) {changeData = "bi bi-globe";} // no connection to mongodb?
+            if (!employees.Any()) {changeData = "bi bi-globe";} // no connection?
             else
             {
-                foreach (User user in users)
+                // look for a matching usr in the dbo.Employees table
+                // [FirstName]  [LastName]  [Email]
+                // Sean         Glover      seanglover.spg@gmail.com
+                foreach (Employee emp in employees)
                 {
-                    if (user.Email.ToLowerInvariant() == usr | user.Name.ToLowerInvariant() == usr)
+                    string empFullName = emp.FirstName.Trim().ToLowerInvariant() + " " + emp.LastName.Trim().ToLowerInvariant();
+                    string empEmail = emp.Email.Trim().ToLowerInvariant();
+
+                    if (usr == empFullName | usr == empEmail)
                     {
-                        changeData = user.Password.ToLowerInvariant() == pwd ? "bi bi-check" : "bi bi-x";
+                        changeData = emp.AccessKey.ToLowerInvariant() == pwd ? "bi bi-check" : "bi bi-x";
+                        //Console.WriteLine( emp.AccessKey + " *** " + pwd);
+                        //Console.WriteLine(JsonConvert.SerializeObject(emp, Formatting.Indented));
                         break;
                     }
                 }
             }
             changeData = changeData == "received user list" ? "bi bi-question" : changeData;   
         }
+    }
+
+    private void Stop()
+    {
+        int x = 0;
+        int y = 0;
+        int z = x / y;
     }
 }
