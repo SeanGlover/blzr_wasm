@@ -7,12 +7,12 @@
   "linkerEnabled": true,
   "resources": {
     "assembly": {
-      "blzr_wasm.Client.dll": "sha256-mdOUio\/K8Ck\/sg9uvJVj6GYmCnuu3\/GN7t4x4XQ22AI=",
+      "blzr_wasm.Client.dll": "sha256-1SOoOzY+8137YJ6b9VlIJSlMxe6\/TxvK7kceg2x1rMQ=",
       "blzr_wasm.Shared.dll": "sha256-f2g4S4Z9+a5m9DVI5\/qDEqaIMaIEje24kJWP3vbtRLc=",
       "DnsClient.dll": "sha256-XFrb8OLREZnPfwKYGkJqqnN6zBL81E3\/fFPZfbZI0Ns=",
       "Microsoft.AspNetCore.Components.dll": "sha256-2CaBGbtvvrPmKW8KUBi613Xvg2+7mPk0dP4QvcyvemQ=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-\/7\/rwea8I\/vOZ8UQlhaBZAVWyCo1wIT5Rbhe4q6mN3o=",
-      "Microsoft.AspNetCore.Components.Web.dll": "sha256-KlKNcjpN9w9pSKkn6xa6jjDw54+gEsDpZVerwmWHNqo=",
+      "Microsoft.AspNetCore.Components.Web.dll": "sha256-Jx6i+OvCZTJGT9wWTttvdz2QeLl1VBeveZl19kse82k=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-OfawION\/UfFO75U4pMPDVhHt71EbKuF3qxDeiPFGqKo=",
       "Microsoft.CSharp.dll": "sha256-HjbPMkw1EhHMRY3mZ2i5lZsauzz1Gsfx28uLGaLfihI=",
       "Microsoft.Extensions.Configuration.Abstractions.dll": "sha256-zhFtW4kE16TdrpPne9I1Cu9o0KYzrS50VE9MVSifJg4=",

@@ -1,6 +1,14 @@
 ﻿<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
-    <MudNavLink Href="/" Match="NavLinkMatch.Prefix">Options</MudNavLink>
+    <MudNavGroup Title="Options" Expanded="true">
+            <MudNavLink Href="/installform"  Match="NavLinkMatch.Prefix">Installation form</MudNavLink>
+            <MudNavLink Href="/counter"  Match="NavLinkMatch.Prefix">Counter</MudNavLink>
+            <MudNavLink Href="/fetchdata"  Match="NavLinkMatch.Prefix">Weather</MudNavLink>
+        <MudNavGroup Title="Placeholder options" Expanded="true">
+            <MudNavLink Href="/"  Match="NavLinkMatch.Prefix">Placeholder 1</MudNavLink>
+            <MudNavLink Href="/"  Match="NavLinkMatch.Prefix">Placeholder 2</MudNavLink>
+        </MudNavGroup>
+    </MudNavGroup>
     <MudNavGroup Title="Collections" Expanded="true">
         <MudNavGroup Title="mongoDb" Expanded="true">
             <MudNavLink Href="/api/users"  Match="NavLinkMatch.Prefix">Users</MudNavLink>

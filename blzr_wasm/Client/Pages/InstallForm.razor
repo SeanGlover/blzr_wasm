@@ -1,0 +1,319 @@
+﻿@page "/installform"
+@using blzr_wasm.Shared
+@inject IJSRuntime jsRuntime
+@inject HttpClient Http
+
+<PageTitle>Installation form</PageTitle>
+
+  <body>
+    <div class="shadow p-3 mb-5 bg-white rounded" style="margin: 4px">
+      <form class="row g-3 needs-validation" novalidate method="post" action="sending_email.php">
+
+        <div class="row" style="padding: 8px 0px 0px 0px; margin: 0px;"> <!-- business section -->
+          <div class="col-md-3"> <!-- business_name -->
+            <label for="businessName" class="form-label" id="businessNameLabel">Business name</label>
+            <input type="text" class="form-control" id="businessName" value="Centre Évasion" required>
+          </div>
+          <div class="col-md-4"> <!-- purchase_order -->
+            <label for="purchaseOrder" class="form-label" id="purchaseOrderLabel">Purchase order</label>
+            <input type="text" class="form-control" id="purchaseOrder" value="P0869488" required>
+            <div class="invalid-feedback">
+              Please provide a valid street.
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6"> <!-- document_date -->
+            <label for="documentDate" class="form-label">Document date</label>
+            <div class="input-group">
+              <input id="documentDate" class="form-control" type="date" value="2022-05-06" />
+            </div>
+          </div>
+        </div>
+        <div class="row" style="padding: 8px 0px 0px 0px; margin: 0px;"> <!-- address -->
+          <div class="col-md-6"> <!-- street -->
+            <label for="addressStreet" class="form-label" id="addressStreetLabel">Street</label>
+            <input type="text" class="form-control" id="addressStreet" value="3530 Rue Jean-Talon Ouest" required>
+            <div class="invalid-feedback">
+              Please provide a valid street.
+            </div>
+          </div>
+          <div class="col-md-2"> <!-- city -->
+            <label for="addressCity" class="form-label" id="addressCityLabel">City</label>
+            <input type="text" class="form-control" id="addressCity" value="Montréal" required>
+            <div class="invalid-feedback">
+              Please provide a valid city.
+            </div>
+          </div>
+          <div class="col-md-2"> <!-- provinces -->
+            <label for="provinces" class="form-label">Province</label>
+            <select class="form-select" id="provinces" value="Québec" required>
+              <option selected disabled id="provincesLabel">Choose a province</option>
+              <option value="AB">Alberta</option>
+              <option value="BC">British Columbia</option>
+              <option value="MB">Manitoba</option>
+              <option value="NB">New Brunswick</option>
+              <option value="NL">Newfoundland and Labrador</option>
+              <option value="NS">Nova Scotia</option>
+              <option value="NT">Northwest Territories</option>
+              <option value="NU">Nunavut</option>
+              <option value="ON">Ontario</option>
+              <option value="PE">Prince Edward Island</option>
+              <option value="QC" selected>Québec</option>
+              <option value="SK">Saskatchewan</option>
+              <option value="YT">Yukon</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid province.
+            </div>
+          </div>
+          <div class="col-md-1"> <!-- postal_code -->
+            <label for="addressPostalCode" class="form-label" id="addressPostalCodeLabel">Postal code</label>
+            <input type="text" class="form-control" id="addressPostalCode" required value="H3R 2G3">
+            <div class="invalid-feedback">
+              Please provide a valid postal code.
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-left" style="padding: 8px 0px 0px 0px; margin: 0px;"> <!-- contact section -->
+          <div class="col-md-2"> <!-- contact_name -->
+            <label for="contactName" class="form-label" id="contactNameLabel">Contact name</label>
+            <input type="text" class="form-control" id="contactName" value="Laura Skrupskas" required>
+          </div>
+          <div class="col-md-3"> <!-- contact_title -->
+            <label for="contactTitle" class="form-label" id="contactTitleLabel">Contact title</label>
+            <input type="text" class="form-control" id="contactTitle" value="Program and services coordinator" required>
+          </div>
+          <div class="col-md-4"> <!-- contact_email -->
+            <label for="contactEmail" class="form-label" id="contactEmailLabel">Contact email</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-envelope"></i></span>
+              <input type="text" class="form-control" id="contactEmail" value="evasion.coordination2@gmail.com" aria-describedby="inputGroupPrepend" required>
+            </div>
+          </div>
+          <div class="col-md-2"> <!-- contact_phone -->
+            <label for="" class="form-label" id="contactPhoneLabel">Contact phone</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-telephone"></i></span>
+              <input type="text" class="form-control" id="contactPhone" value="514-816-0787" aria-describedby="inputGroupPrepend" required>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="padding: 8px 0px 0px 0px; margin: 0px;"> <!-- installation section -->
+          <div class="col-md-3"> <!-- installer_name -->
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="installerNameLabel">Installer name</span>
+              <input type="text" class="form-control" id="installerName" value="Sean Glover" aria-describedby="inputGroupPrepend" required>
+            </div>
+          </div>
+          <div class="col-md-2"> <!-- installation_types -->
+            <div class="input-group">
+              <span class="input-group-text">Call type</span>
+              <select class="form-select" id="types" value="Installation" required>
+                <option selected disabled>Types</option>
+                <option value="I" id="" selected>Installation</option>
+                <option value="W" id="optionTypeLabel">Warranty</option>
+                <option value="S" id="">Service</option>
+              </select>
+            </div>
+          </div>       
+@*          <div class="col-lg-2 col-md-1 col-sm-1" style="display: flex; align-items: center; padding: 0px; margin: 0px;"> <!-- status_checkbox -->
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+              <label class="form-check-label" for="flexSwitchCheckDefault">Complete</label>
+            </div>
+          </div>*@
+          <div class="col-lg-3 col-sm-6"> <!-- start_date -->
+            <div class="input-group">
+              <span class="input-group-text" id="startDateLabel">Start</span>
+              <input id="startDate" class="form-control" type="date" value="2022-03-20" />
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6"> <!-- end_date -->
+            <div class="input-group">
+              <span class="input-group-text" id="endDateLabel">End</span>
+              <input id="endDate" class="form-control" type="date" value="2022-04-25" />
+            </div>
+          </div>
+        </div>
+
+        <li class="flex-fill list-group-item" style="text-align: center; background-color: #4267B2; color: white; margin: 8px 8px 0px 0px;">Serialized products</li>
+        <ul class="list-group list-group-horizontal" style="margin: 2px 1px 1px 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+
+        <li class="flex-fill list-group-item" style="text-align: center; background-color: #DCDCDC; color: black; margin: 8px 8px 0px 0px;">Trained products</li>
+        <ul class="list-group list-group-horizontal" style="margin: 2px 1px 1px 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+        <ul class="list-group list-group-horizontal" style="margin: 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+
+        <li class="flex-fill list-group-item" style="text-align: center; background-color: #E6E6FA; color: black; margin: 8px 8px 0px 0px;">Trained staff</li>
+        <ul class="list-group list-group-horizontal" style="margin: 2px 1px 1px 1px;">
+          <li class="flex-fill list-group-item">An item</li>
+          <li class="flex-fill list-group-item">A second item</li>
+          <li class="flex-fill list-group-item">A third item</li>
+        </ul>
+
+        <div class="form-floating"> <!-- comments -->
+          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+          <label for="floatingTextarea">Comments</label>
+        </div>
+        <div class="form-floating"> <!-- issues -->
+          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+          <label for="floatingTextarea">Issues</label>
+        </div>
+
+        <div class="row" style="padding: 8px 0px 0px 0px; margin: 0px;"> <!-- address -->
+          <div class="col-md-9"> <!-- client_signature -->
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="clientSignatureLabel">Client signature</span>
+              <input type="text" class="form-control" id="clientSignature" value="" aria-describedby="inputGroupPrepend" required>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6"> <!-- sign_date -->
+            <div class="input-group">
+              <span class="input-group-text" id="signDateLabel">Dated</span>
+              <input id="signDate" class="form-control" type="date" value="2022-04-27" />
+            </div>
+          </div>
+        </div>
+
+        <div class="height-100 container d-flex justify-content-center align-items-center">
+            <div class="card p-3">
+                <div class="d-flex justify-content-between align-items-center"> <!-- overall -->
+                    <div class="ratings" id="starsOverall">
+                      <img src="images\starEmpty.png" id="1-overall" height="22" width="22">
+                      <img src="images\starEmpty.png" id="2-overall" height="22" width="22">
+                      <img src="images\starEmpty.png" id="3-overall" height="22" width="22">
+                      <img src="images\starEmpty.png" id="4-overall" height="22" width="22">
+                      <img src="images\starEmpty.png" id="5-overall" height="22" width="22">
+                    </div>
+                    <div class="review-count" id="overallRatingLabel" style="padding: 0px; font-size:larger">Overall rating</div>
+                </div>
+                <div class="mt-1 d-flex justify-content-between align-items-center"> <!-- professionalism -->
+                    <div class="review-stat" style="padding: 0px 5px; font-size:large">Installer professionalism</div>
+                    <div class="small-ratings" id="starsProf">
+                        <img src="images\starEmpty.png" id="1-profesional" height="16" width="16" @onmousemove="@Mouse_Move">
+                        <img src="images\starEmpty.png" id="2-profesional" height="16" width="16" @onmousemove="@Mouse_Move">
+                        <img src="images\starEmpty.png" id="3-profesional" height="16" width="16" @onmousemove="@Mouse_Move">
+                        <img src="images\starEmpty.png" id="4-profesional" height="16" width="16" @onmousemove="@Mouse_Move">
+                        <img src="images\starEmpty.png" id="5-profesional" height="16" width="16" @onmousemove="@Mouse_Move">
+                    </div>
+                </div>
+                <div class="mt-1 d-flex justify-content-between align-items-center"> <!-- prompt -->
+                    <div class="review-stat" style="padding: 0px; font-size:large">Installer promptness</div>
+                    <div class="small-ratings" id="starsPrompt">
+                      <img src="images\starEmpty.png" id="1-prompt" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="2-prompt" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="3-prompt" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="4-prompt" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="5-prompt" height="16" width="16" @onmousemove="@Mouse_Move">
+                    </div>
+                </div>
+                <div class="mt-1 d-flex justify-content-between align-items-center"> <!-- workmanship -->
+                    <div class="review-stat" style="padding: 0px; font-size:large">Installer workmanship</div>
+                    <div class="small-ratings" id="starsWork">
+                      <img src="images\starEmpty.png" id="1-workmanship" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="2-workmanship" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="3-workmanship" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="4-workmanship" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="5-workmanship" height="16" width="16" @onmousemove="@Mouse_Move">
+                    </div>
+                </div>
+                <div class="mt-1 d-flex justify-content-between align-items-center"> <!-- product_quality -->
+                    <div class="review-stat" style="padding: 0px; font-size:large">Product quality</div>
+                    <div class="small-ratings" id="starsQuality">
+                      <img src="images\starEmpty.png" id="1-quality" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="2-quality" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="3-quality" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="4-quality" height="16" width="16" @onmousemove="@Mouse_Move">
+                      <img src="images\starEmpty.png" id="5-quality" height="16" width="16" @onmousemove="@Mouse_Move">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12"> <!-- terms_checkbox -->
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <div class="col-12"> <!-- submit_form -->
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+      </form>
+    </div>
+  </body>
+@code {
+    protected async void Mouse_Move(MouseEventArgs e)
+    {
+        var empty = await jsRuntime.InvokeAsync<string>("StarEnter", e.ClientX, e.ClientY);
+        StateHasChanged();
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) {
+            await jsRuntime.InvokeVoidAsync("Change_TitleBar", "Installation form");
+            await base.OnAfterRenderAsync(firstRender);
+        }
+    }
+    //protected override async Task OnInitializedAsync() { await jsRuntime.InvokeVoidAsync("Change_TitleBar", "Installation form"); }
+}
